@@ -2,7 +2,6 @@
 
 import Head from "next/head";
 import { useState } from "react";
-import Layout from "@/components/Layout";
 import { Container } from "@/components/Container";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
@@ -15,7 +14,7 @@ export default function Home() {
   const [showExperience, setShowExperience] = useState(false);
 
   return (
-    <Layout>
+    <>
       <Head>
         <title>Prince Joseph Udoewah | Frontend Developer</title>
         <meta
@@ -24,16 +23,16 @@ export default function Home() {
         />
       </Head>
 
-      {/* Hero Section */}
+      {/* Hero */}
       <Hero />
 
-      {/* About Section with toggle prop */}
+      {/* About */}
       <About
         onToggleExperience={() => setShowExperience(!showExperience)}
         isExperienceVisible={showExperience}
       />
 
-      {/* Experience Section — fades in/out dynamically */}
+      {/* Experience (Animated) */}
       <div
         className={`transition-all duration-700 ease-in-out overflow-hidden ${
           showExperience
@@ -56,7 +55,6 @@ export default function Home() {
       <Container>
         <ContactSection />
       </Container>
-    </Layout>
+    </>
   );
 }
-

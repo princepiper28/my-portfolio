@@ -13,14 +13,14 @@ export function Footer() {
               Prince
             </span>
             <span className="text-white font-poppins font-bold text-xl md:text-2xl">
-              Joseph
+              Udoewah
             </span>
           </div>
 
           {/* Social Links */}
           <div className="flex items-center gap-5">
             <a
-              href="https://github.com"
+              href="https://github.com/princepiper28"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -30,7 +30,7 @@ export function Footer() {
             </a>
 
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/prince-udoewah-801637111/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -50,7 +50,7 @@ export function Footer() {
             </a>
 
             <a
-              href="mailto:prince.joseph@example.com"
+              href="mailto:princepiper28@gmail.com"
               aria-label="Send Email"
               className="w-10 h-10 rounded-lg bg-dark-gray flex items-center justify-center hover:bg-primary/20 transition-all duration-300 group focus:ring-2 focus:ring-primary/40"
             >
@@ -60,7 +60,7 @@ export function Footer() {
 
           {/* Copyright */}
           <p className="text-text-off-white/60 font-inter text-sm">
-            © {new Date().getFullYear()} Prince Joseph. All rights reserved.
+            © {new Date().getFullYear()} Prince Udoewah. All rights reserved.
           </p>
         </div>
       </div>

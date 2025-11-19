@@ -1,147 +1,190 @@
-import { useState } from "react";
-import { Mail, Phone, MapPin, Send } from "lucide-react"; // ✅ Import all icons used
-import { Button } from "@/components/Button"; // ✅ Import Button (if you're using shadcn/ui or similar)
+"use client";
+
+import React, { useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
+import { motion, useAnimation, Variants } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 export function ContactSection() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-    alert("Thank you for your message! I will get back to you soon.");
-    setFormData({ name: "", email: "", message: "" });
+  // Scroll Reveal Controls
+  const controls = useAnimation();
+  const { ref, inView } = useInView({ threshold: 0.2 });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  const fadeUp: Variants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 120, damping: 18 },
+    },
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const sendEmail = (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    emailjs
+      .sendForm(
+        process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAIL_TEMPLATE_ID!,
+        e.target,
+        process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY!
+      )
+      .then(
+        () => {
+          setMessage("Message sent successfully!");
+          setLoading(false);
+          e.target.reset();
+        },
+        () => {
+          setMessage("Failed to send message. Try again.");
+          setLoading(false);
+        }
+      );
   };
 
   return (
-    <section id="contact" className="py-24 px-6 lg:px-12 bg-primary">
-      <div className="max-w-[1200px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* Left Column - Contact Info */}
-          <div className="space-y-10">
-            <div>
-              <h2 className="text-dark font-poppins text-3xl font-semibold mb-4">
-                Contact Me
-              </h2>
-              <p className="text-dark/80 font-inter text-lg leading-relaxed max-w-md">
-                Let's work together on your next project. Get in touch and let's
-                create something amazing.
-              </p>
-            </div>
+    <motion.section
+      ref={ref}
+      initial="hidden"
+      animate={controls}
+      variants={fadeUp}
+      id="contact"
+      className="py-24 px-6 bg-gradient-to-b from-dark to-dark-lighter/40 
+                 text-white backdrop-blur-xl border-t border-white/10"
+    >
+      <div className="max-w-3xl mx-auto">
 
-            <div className="space-y-6">
-              {/* Email */}
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-dark/10 flex items-center justify-center flex-shrink-0">
-                  <Mail className="text-dark" size={24} />
-                </div>
-                <div>
-                  <p className="text-dark font-semibold text-sm uppercase tracking-wide">
-                    Email
-                  </p>
-                  <p className="text-dark/80 text-base font-inter">
-                    princepiper28@gmail.com
-                  </p>
-                </div>
-              </div>
+        {/* Title */}
+        <motion.h2
+          variants={fadeUp}
+          className="text-4xl font-bold text-center mb-4 
+          bg-gradient-to-r from-purple-400 to-orange-400 bg-clip-text text-transparent"
+        >
+          Get In Touch
+        </motion.h2>
 
-              {/* Phone */}
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-dark/10 flex items-center justify-center flex-shrink-0">
-                  <Phone className="text-dark" size={24} />
-                </div>
-                <div>
-                  <p className="text-dark font-semibold text-sm uppercase tracking-wide">
-                    Phone
-                  </p>
-                  <p className="text-dark/80 text-base font-inter">
-                    +2348147101818
-                  </p>
-                </div>
-              </div>
+        <motion.p
+          variants={fadeUp}
+          className="text-center text-gray-400 mb-14"
+        >
+          Let’s create something amazing together.
+        </motion.p>
 
-              {/* Location */}
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-dark/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="text-dark" size={24} />
-                </div>
-                <div>
-                  <p className="text-dark font-semibold text-sm uppercase tracking-wide">
-                    Location
-                  </p>
-                  <p className="text-dark/80 text-base font-inter">
-                    Lagos, Nigeria. 
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+        {/* Glass Card */}
+        <motion.form
+          variants={fadeUp}
+          onSubmit={sendEmail}
+          className="
+            space-y-6 p-8 rounded-2xl 
+            bg-white/5 backdrop-blur-xl shadow-2xl 
+            border border-white/10 relative
+          "
+        >
 
-          {/* Right Column - Form */}
+          {/* Glowing Border */}
+          <div className="absolute inset-0 rounded-2xl border border-transparent 
+            [background:linear-gradient(120deg,rgba(168,85,247,0.5),rgba(251,146,60,0.5))_border-box] 
+            mask-[linear-gradient(#000_0_0)_padding-box,linear-gradient(#000_0_0)] 
+            mask-composite:exclude pointer-events-none"></div>
+
+          {/* Name */}
           <div>
-            <form
-              onSubmit={handleSubmit}
-              className="bg-dark rounded-2xl p-8 shadow-xl space-y-6"
-            >
-              <div>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Your Name"
-                  required
-                  className="w-full h-12 px-4 bg-dark-gray text-white rounded-lg border-2 border-dark-gray focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all font-inter text-base"
-                />
-              </div>
-
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Your Email"
-                  required
-                  className="w-full h-12 px-4 bg-dark-gray text-white rounded-lg border-2 border-dark-gray focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all font-inter text-base"
-                />
-              </div>
-
-              <div>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Your Message"
-                  required
-                  rows={6}
-                  className="w-full px-4 py-3 bg-dark-gray text-white rounded-lg border-2 border-dark-gray focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all resize-none font-inter text-base"
-                />
-              </div>
-
-              <Button
-                type="submit"
-                variant="outline"
-                className="w-full border-dark text-dark font-semibold hover:bg-dark hover:text-primary transition-all duration-300 flex items-center justify-center gap-2"
-              >
-                <Send size={18} /> Send Message
-              </Button>
-            </form>
+            <label className="block text-gray-300 mb-1">Name</label>
+            <input
+              type="text"
+              name="name"   // UPDATED
+              required
+              className="
+                w-full p-3 rounded-lg bg-black/40 text-white 
+                placeholder:text-gray-500 outline-none
+                focus:ring-2 focus:ring-purple-500 transition
+              "
+              placeholder="Your name"
+            />
           </div>
-        </div>
+
+          {/* Email */}
+          <div>
+            <label className="block text-gray-300 mb-1">Email</label>
+            <input
+              type="email"
+              name="email"  // UPDATED
+              required
+              className="
+                w-full p-3 rounded-lg bg-black/40 text-white 
+                placeholder:text-gray-500 outline-none
+                focus:ring-2 focus:ring-purple-500 transition
+              "
+              placeholder="your@email.com"
+            />
+          </div>
+
+          {/* Subject */}
+          <div>
+            <label className="block text-gray-300 mb-1">Subject</label>
+            <input
+              type="text"
+              name="title"  // NEW FIELD
+              required
+              className="
+                w-full p-3 rounded-lg bg-black/40 text-white 
+                placeholder:text-gray-500 outline-none
+                focus:ring-2 focus:ring-purple-500 transition
+              "
+              placeholder="What is this about?"
+            />
+          </div>
+
+          {/* Message */}
+          <div>
+            <label className="block text-gray-300 mb-1">Message</label>
+            <textarea
+              name="message" // SAME
+              required
+              rows={5}
+              className="
+                w-full p-3 rounded-lg bg-black/40 text-white 
+                placeholder:text-gray-500 outline-none
+                focus:ring-2 focus:ring-purple-500 transition
+              "
+              placeholder="Write your message..."
+            ></textarea>
+          </div>
+
+          {/* Submit */}
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            type="submit"
+            disabled={loading}
+            className="
+              w-full py-3 text-lg font-semibold rounded-xl 
+              bg-gradient-to-r from-purple-600 to-orange-500 
+              hover:opacity-90 transition disabled:opacity-50
+            "
+          >
+            {loading ? "Sending..." : "Send Message"}
+          </motion.button>
+
+          {message && (
+            <p className="text-center text-green-400 pt-2 animate-pulse">
+              {message}
+            </p>
+          )}
+
+        </motion.form>
       </div>
-    </section>
+    </motion.section>
   );
 }

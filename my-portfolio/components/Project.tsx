@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ProjectCard } from "./ProjectCard";
+import { motion, Variants } from "framer-motion";
 
 export function ProjectsSection() {
   const projects = [
@@ -18,6 +19,7 @@ export function ProjectsSection() {
         "A movie discovery platform that lets users explore trending titles, save favorites, and create personalized watchlists using public APIs.",
       image:
         "https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=1080&q=80",
+      url: "https://movienest-phi.vercel.app",
     },
     {
       title: "Clyna Patient Directory",
@@ -49,6 +51,16 @@ export function ProjectsSection() {
     },
   ];
 
+  // Stagger animation for grid items
+  const staggerParent: Variants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2, // delay between cards
+      },
+    },
+  };
+
   return (
     <section id="projects" className="py-24 bg-dark-lighter">
       <div className="container mx-auto px-6 md:px-10">
@@ -67,12 +79,18 @@ export function ProjectsSection() {
           </p>
         </div>
 
-        {/* Project Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Project Grid with stagger animation */}
+        <motion.div
+          variants={staggerParent}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {projects.map((project, index) => (
             <ProjectCard key={index} {...project} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
