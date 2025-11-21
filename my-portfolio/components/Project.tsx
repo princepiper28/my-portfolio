@@ -36,7 +36,7 @@ export function ProjectsSection() {
         "https://images.unsplash.com/photo-1586880244406-556ebe35f282?auto=format&fit=crop&w=1080&q=80",
     },
     {
-      title: "ALX TypeScript Projects",
+      title: "TypeScript Projects",
       description:
         "A collection of real-world TypeScript projects focusing on clean architecture, modular design, and reusable React components.",
       image:

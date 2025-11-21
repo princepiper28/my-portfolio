@@ -28,23 +28,25 @@ export function ContactSection() {
     },
   };
 
-  const sendEmail = (e: any) => {
+  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
+
+    const form = e.currentTarget;
 
     emailjs
       .sendForm(
         process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID!,
         process.env.NEXT_PUBLIC_EMAIL_TEMPLATE_ID!,
-        e.target,
+        form,
         process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY!
       )
       .then(
         () => {
           setMessage("Message sent successfully!");
           setLoading(false);
-          e.target.reset();
+          form.reset();
         },
         () => {
           setMessage("Failed to send message. Try again.");
