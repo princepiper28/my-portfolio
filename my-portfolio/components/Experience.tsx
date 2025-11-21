@@ -8,7 +8,7 @@ export function Experience() {
       company: 'Seacom Services Nigeria Limited',
       period: 'Nov 2022 - Present',
       description:
-        'Oversaw company operations, coordinated multiple teams, and ensured project delivery with high standards.',
+        'Overseeing company operations, coordinated multiple teams, and ensured project delivery with high standards.',
     },
     {
       title: 'Tech & Freelance Projects',
