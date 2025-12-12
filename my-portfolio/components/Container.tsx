@@ -3,12 +3,25 @@ import React, { ReactNode } from "react";
 interface ContainerProps {
   children: ReactNode;
   className?: string;
+  full?: boolean; // allow disabling width limit
 }
 
-export const Container: React.FC<ContainerProps> = ({ children, className = "" }) => {
+export const Container: React.FC<ContainerProps> = ({
+  children,
+  className = "",
+  full = false,
+}) => {
   return (
     <div
-      className={`max-w-[1200px] mx-auto px-6 sm:px-8 lg:px-12 ${className}`}
+      className={`
+        w-full
+        ${full ? "" : "max-w-6xl"}
+        mx-auto
+        px-4
+        sm:px-6
+        md:px-8
+        ${className}
+      `}
     >
       {children}
     </div>

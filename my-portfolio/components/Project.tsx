@@ -12,6 +12,7 @@ export function ProjectsSection() {
         "A property listing and roommate matching web app built with React, Tailwind CSS, and TypeScript. Includes authentication, dashboard, and rent-splitting features.",
       image:
         "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1080&q=80",
+      url: "https://roomierent-capstone.vercel.app",
     },
     {
       title: "MovieNest",
@@ -51,20 +52,20 @@ export function ProjectsSection() {
     },
   ];
 
-  // Stagger animation for grid items
   const staggerParent: Variants = {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.2, // delay between cards
+        staggerChildren: 0.2,
       },
     },
   };
 
   return (
-    <section id="projects" className="py-24 bg-dark-lighter">
-      <div className="container mx-auto px-6 md:px-10">
-        {/* Section Header */}
+    <section id="projects" className="w-full bg-dark-lighter py-24">
+      <div className="px-4 sm:px-6 lg:px-12 max-w-6xl mx-auto">
+        
+        {/* Header */}
         <div className="text-center mb-16">
           <h2
             className="text-[#f86a0f] text-3xl md:text-4xl font-bold mb-4"
@@ -74,18 +75,18 @@ export function ProjectsSection() {
           </h2>
 
           <p className="text-text-off-white/80 max-w-2xl mx-auto text-lg leading-8 font-inter">
-            A showcase of my featured frontend projects—built with precision,
+            A showcase of my featured frontend projects — built with precision,
             performance, and a passion for user experience.
           </p>
         </div>
 
-        {/* Project Grid with stagger animation */}
+        {/* Projects Grid */}
         <motion.div
           variants={staggerParent}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
         >
           {projects.map((project, index) => (
             <ProjectCard key={index} {...project} />

@@ -9,22 +9,19 @@ export function ContactSection() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // Scroll Reveal Controls
   const controls = useAnimation();
   const { ref, inView } = useInView({ threshold: 0.2 });
 
   useEffect(() => {
-    if (inView) {
-      controls.start("visible");
-    }
+    if (inView) controls.start("visible");
   }, [controls, inView]);
 
   const fadeUp: Variants = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { type: "spring", stiffness: 120, damping: 18 },
+      transition: { duration: 0.6, ease: "easeOut" },
     },
   };
 
@@ -33,23 +30,21 @@ export function ContactSection() {
     setLoading(true);
     setMessage("");
 
-    const form = e.currentTarget;
-
     emailjs
       .sendForm(
         process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID!,
         process.env.NEXT_PUBLIC_EMAIL_TEMPLATE_ID!,
-        form,
+        e.currentTarget,
         process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY!
       )
       .then(
         () => {
-          setMessage("Message sent successfully!");
+          setMessage("✅ Message sent successfully!");
           setLoading(false);
-          form.reset();
+          e.currentTarget.reset();
         },
         () => {
-          setMessage("Failed to send message. Try again.");
+          setMessage("❌ Failed to send message. Try again.");
           setLoading(false);
         }
       );
@@ -62,131 +57,125 @@ export function ContactSection() {
       animate={controls}
       variants={fadeUp}
       id="contact"
-      className="py-24 px-6 bg-gradient-to-b from-dark to-dark-lighter/40 
-                 text-white backdrop-blur-xl border-t border-white/10"
+      className="relative w-full py-10 sm:py-14
+                 bg-gradient-to-b from-dark to-dark-lighter/40 
+                 text-white overflow-hidden"
     >
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 w-full">
 
         {/* Title */}
         <motion.h2
           variants={fadeUp}
-          className="text-4xl font-bold text-center mb-4 
-          bg-gradient-to-r from-purple-400 to-orange-400 bg-clip-text text-transparent"
+          className="text-3xl sm:text-4xl font-bold text-center mb-2
+                     bg-gradient-to-r from-purple-400 to-orange-400 
+                     bg-clip-text text-transparent"
         >
           Get In Touch
         </motion.h2>
 
         <motion.p
           variants={fadeUp}
-          className="text-center text-gray-400 mb-14"
+          className="text-center text-gray-400 mb-6 text-sm sm:text-base"
         >
           Let’s create something amazing together.
         </motion.p>
 
-        {/* Glass Card */}
+        {/* Form Card */}
         <motion.form
           variants={fadeUp}
           onSubmit={sendEmail}
-          className="
-            space-y-6 p-8 rounded-2xl 
-            bg-white/5 backdrop-blur-xl shadow-2xl 
-            border border-white/10 relative
-          "
+          className="relative w-full space-y-4 p-5 sm:p-6
+                     rounded-2xl bg-white/5 backdrop-blur-xl 
+                     shadow-xl border border-white/10 
+                     overflow-hidden"
         >
-
-          {/* Glowing Border */}
-          <div className="absolute inset-0 rounded-2xl border border-transparent 
-            [background:linear-gradient(120deg,rgba(168,85,247,0.5),rgba(251,146,60,0.5))_border-box] 
-            mask-[linear-gradient(#000_0_0)_padding-box,linear-gradient(#000_0_0)] 
-            mask-composite:exclude pointer-events-none"></div>
+          {/* Glow Border */}
+          <div
+            className="absolute inset-0 rounded-2xl pointer-events-none
+                       border border-white/10
+                       bg-gradient-to-br from-purple-500/10 to-orange-500/10"
+          />
 
           {/* Name */}
-          <div>
-            <label className="block text-gray-300 mb-1">Name</label>
+          <Field label="Name">
             <input
               type="text"
-              name="name"   // UPDATED
+              name="name"
               required
-              className="
-                w-full p-3 rounded-lg bg-black/40 text-white 
-                placeholder:text-gray-500 outline-none
-                focus:ring-2 focus:ring-purple-500 transition
-              "
               placeholder="Your name"
+              className="input-style"
             />
-          </div>
+          </Field>
 
           {/* Email */}
-          <div>
-            <label className="block text-gray-300 mb-1">Email</label>
+          <Field label="Email">
             <input
               type="email"
-              name="email"  // UPDATED
+              name="email"
               required
-              className="
-                w-full p-3 rounded-lg bg-black/40 text-white 
-                placeholder:text-gray-500 outline-none
-                focus:ring-2 focus:ring-purple-500 transition
-              "
               placeholder="your@email.com"
+              className="input-style"
             />
-          </div>
+          </Field>
 
           {/* Subject */}
-          <div>
-            <label className="block text-gray-300 mb-1">Subject</label>
+          <Field label="Subject">
             <input
               type="text"
-              name="title"  // NEW FIELD
+              name="title"
               required
-              className="
-                w-full p-3 rounded-lg bg-black/40 text-white 
-                placeholder:text-gray-500 outline-none
-                focus:ring-2 focus:ring-purple-500 transition
-              "
               placeholder="What is this about?"
+              className="input-style"
             />
-          </div>
+          </Field>
 
           {/* Message */}
-          <div>
-            <label className="block text-gray-300 mb-1">Message</label>
+          <Field label="Message">
             <textarea
-              name="message" // SAME
+              name="message"
+              rows={4}
               required
-              rows={5}
-              className="
-                w-full p-3 rounded-lg bg-black/40 text-white 
-                placeholder:text-gray-500 outline-none
-                focus:ring-2 focus:ring-purple-500 transition
-              "
               placeholder="Write your message..."
-            ></textarea>
-          </div>
+              className="input-style resize-none"
+            />
+          </Field>
 
-          {/* Submit */}
+          {/* Button */}
           <motion.button
             whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileTap={{ scale: 0.96 }}
             type="submit"
             disabled={loading}
-            className="
-              w-full py-3 text-lg font-semibold rounded-xl 
-              bg-gradient-to-r from-purple-600 to-orange-500 
-              hover:opacity-90 transition disabled:opacity-50
-            "
+            className="w-full py-3 text-base sm:text-lg font-semibold rounded-xl 
+                       bg-gradient-to-r from-purple-600 to-orange-500 
+                       hover:opacity-90 transition disabled:opacity-50"
           >
             {loading ? "Sending..." : "Send Message"}
           </motion.button>
 
           {message && (
-            <p className="text-center text-green-400 pt-2 animate-pulse">
+            <p className="text-center text-green-400 pt-2 text-sm">
               {message}
             </p>
           )}
-
         </motion.form>
       </div>
     </motion.section>
+  );
+}
+
+/* Reusable Field Component */
+function Field({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-1">
+      <label className="block text-gray-300 text-sm">{label}</label>
+      {children}
+    </div>
   );
 }
