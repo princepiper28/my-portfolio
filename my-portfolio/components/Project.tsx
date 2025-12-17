@@ -10,45 +10,39 @@ export function ProjectsSection() {
       title: "RoomieRent",
       description:
         "A property listing and roommate matching web app built with React, Tailwind CSS, and TypeScript. Includes authentication, dashboard, and rent-splitting features.",
-      image:
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1080&q=80",
+      image: "/images/projects/roomierent.jpg",
       url: "https://roomierent-capstone.vercel.app",
     },
     {
       title: "MovieNest",
       description:
         "A movie discovery platform that lets users explore trending titles, save favorites, and create personalized watchlists using public APIs.",
-      image:
-        "https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=1080&q=80",
+      image: "/images/projects/movienest.jpg",
       url: "https://movienest-phi.vercel.app",
     },
     {
       title: "Clyna Patient Directory",
       description:
         "A responsive healthcare management dashboard for patient records and directory filtering built with React, PNPM, and Tailwind CSS.",
-      image:
-        "https://images.unsplash.com/photo-1581091870622-7f9b36d33c73?auto=format&fit=crop&w=1080&q=80",
+      image: "/images/projects/clyna-dashboard.jpg",
     },
     {
       title: "Shopora",
       description:
         "An elegant e-commerce web app prototype with product listings, category filtering, and an optimized shopping experience.",
-      image:
-        "https://images.unsplash.com/photo-1586880244406-556ebe35f282?auto=format&fit=crop&w=1080&q=80",
+      image: "/images/projects/shopora.png",
     },
     {
       title: "TypeScript Projects",
       description:
         "A collection of real-world TypeScript projects focusing on clean architecture, modular design, and reusable React components.",
-      image:
-        "https://images.unsplash.com/photo-1605649487212-47bdabede8f3?auto=format&fit=crop&w=1080&q=80",
+      image: "/images/projects/typescript-projects.jpg",
     },
     {
       title: "Personal Portfolio",
       description:
         "A modern portfolio built with Next.js, Tailwind CSS, and TypeScript to showcase my journey, projects, and design philosophy.",
-      image:
-        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1080&q=80",
+      image: "/images/projects/piper-portfolio.jpg",
     },
   ];
 
@@ -64,7 +58,6 @@ export function ProjectsSection() {
   return (
     <section id="projects" className="w-full bg-dark-lighter py-24">
       <div className="px-4 sm:px-6 lg:px-12 max-w-6xl mx-auto">
-        
         {/* Header */}
         <div className="text-center mb-16">
           <h2
