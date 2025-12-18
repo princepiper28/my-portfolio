@@ -43,7 +43,7 @@ export function ProjectsSection() {
       description:
         "A modern portfolio built with Next.js, Tailwind CSS, and TypeScript to showcase my journey, projects, and design philosophy.",
       image: "/images/projects/piper-portfolio.jpg",
-      url: "https://my-portfolio-2uct.vercel.app"
+      url: "https://my-portfolio-2uct.vercel.app",
     },
   ];
 
